@@ -379,9 +379,22 @@ export default function AdminPayments() {
                                                 💵 Cash Payment
                                             </span>
                                         ) : p.screenshot ? (
-                                            <a href={`${IMAGE_BASE_URL}/${p.screenshot}`} target="_blank" rel="noreferrer">
+                                            <a
+                                                href={
+                                                    p.screenshot?.startsWith("http")
+                                                        ? p.screenshot
+                                                        : `${IMAGE_BASE_URL}/${p.screenshot}`
+                                                }
+                                                target="_blank"
+                                                rel="noreferrer"
+                                            >
                                                 <img
-                                                    src={`${IMAGE_BASE_URL}/${p.screenshot}`}
+                                                    src={
+                                                        p.screenshot?.startsWith("http")
+                                                            ? p.screenshot
+                                                            : `${IMAGE_BASE_URL}/${p.screenshot}`
+                                                    }
+                                                    alt="Payment Screenshot"
                                                     className="w-12 h-12 object-cover rounded-lg mx-auto border border-slate-200 hover:scale-110 transition-transform"
                                                 />
                                             </a>

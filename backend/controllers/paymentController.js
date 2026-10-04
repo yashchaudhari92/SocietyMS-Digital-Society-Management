@@ -2,7 +2,9 @@ const Payment = require("../models/Payment");
 const Flat = require("../models/Flat");
 const User = require("../models/User");
 const path = require("path");
+const fs = require("fs");
 const { extractTextFromImage } = require("../utils/googleVision");
+const uploadToCloudinary = require("../utils/cloudinaryUpload");
 
 // ✅ Create monthly records
 exports.createMonthlyPayments = async (req, res) => {
@@ -86,12 +88,29 @@ exports.uploadPayment = async (req, res) => {
     try {
         const { paymentId } = req.body;
 
+        // const payment = await Payment.findById(paymentId);
+        // payment.screenshot = req.file.path;
+        // payment.paymentMethod = "online";   // New added line 
+        // await payment.save();
+
+        // const fullPath = path.join(__dirname, "..", req.file.path);
+
         const payment = await Payment.findById(paymentId);
-        payment.screenshot = req.file.path;
-        payment.paymentMethod = "online";   // New added line 
-        await payment.save();
+
+        if (!payment) {
+            return res.status(404).json({
+                message: "Payment record not found",
+            });
+        }
 
         const fullPath = path.join(__dirname, "..", req.file.path);
+
+        // Upload temporarily stored screenshot to Cloudinary
+        const cloudinaryUrl = await uploadToCloudinary(fullPath);
+
+        payment.screenshot = cloudinaryUrl;
+        payment.paymentMethod = "online";
+        await payment.save();
         // ✅ OCR Verify (existing)
         const { isValid, date, text, reason } = await verifyPaymentScreenshot(fullPath);
 
@@ -99,6 +118,11 @@ exports.uploadPayment = async (req, res) => {
             payment.status = "rejected";
             payment.paymentDate = new Date();
             await payment.save();
+
+            // Delete temporary local file
+            if (fs.existsSync(fullPath)) {
+                fs.unlinkSync(fullPath);
+            }
 
             return res.json({
                 message: "Invalid payment proof",
@@ -248,7 +272,10 @@ exports.uploadPayment = async (req, res) => {
                     p.status = "approved";
                 }
 
-                p.screenshot = req.file.path;
+                // p.screenshot = req.file.path;
+                // p.paymentDate = new Date();
+
+                p.screenshot = cloudinaryUrl;
                 p.paymentDate = new Date();
 
                 await p.save();
@@ -280,6 +307,11 @@ exports.uploadPayment = async (req, res) => {
 
         payment.paymentDate = new Date();
         await payment.save();
+
+        // Delete temporary local file after Cloudinary upload
+        if (fs.existsSync(fullPath)) {
+            fs.unlinkSync(fullPath);
+        }
 
         // 🔥 fetch latest updated record
         const updatedPayment = await Payment.findById(payment._id);

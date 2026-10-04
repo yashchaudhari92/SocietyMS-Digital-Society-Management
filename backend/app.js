@@ -1,10 +1,13 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
-const dotenv = require('dotenv');
 const morgan = require('morgan');
+
 const authRoutes = require("./routes/authRoutes");
 const flatRoutes = require("./routes/flatRoutes");
 const societyRoutes = require("./routes/societyRoutes");
@@ -14,7 +17,6 @@ const balanceRoutes = require("./routes/balanceRoutes");
 const giftRoutes = require("./routes/giftRoutes");
 
 
-dotenv.config();
 require("./utils/cronJobs");
 
 app.use(cors());
