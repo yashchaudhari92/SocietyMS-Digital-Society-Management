@@ -6,6 +6,7 @@ const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
+const fs = require('fs');
 const morgan = require('morgan');
 
 const authRoutes = require("./routes/authRoutes");
@@ -18,6 +19,12 @@ const giftRoutes = require("./routes/giftRoutes");
 
 
 require("./utils/cronJobs");
+
+const uploadDir = path.join(__dirname, "uploads");
+
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
 
 app.use(cors());
 app.use(express.json());
