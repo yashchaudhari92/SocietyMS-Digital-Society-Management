@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# Google Cloud credentials
+google-credentials.json
+backend/google-credentials.json
+
+# Backend uploaded files
+backend/uploads/
+
+# Frontend build
+frontend/dist/
+frontend/build/
+
+# Backend logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
