@@ -34,7 +34,7 @@ app.use("/api/expenses", expenseRoutes);
 app.use("/api/gifts", giftRoutes);
 
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 // connect to mongoDB
 main().then(() => {
@@ -49,6 +49,13 @@ async function main() {
 
 app.get('/', (req, res) => {
     res.send('API Running....!');
+});
+
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        status: 'OK',
+        message: 'SocietyMS Backend is running'
+    });
 });
 
 app.listen(port, () => {
