@@ -70,7 +70,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Society Management System. All rights reserved.
           </p>
           <div className="flex items-center gap-2 text-xs text-slate-500">
-            <span>Designed By @EZIO InfoTech Pvt Ltd.</span>
+            <span>Designed By Yashwant Chaudhari</span>
           </div>
         </div>
       </div>
