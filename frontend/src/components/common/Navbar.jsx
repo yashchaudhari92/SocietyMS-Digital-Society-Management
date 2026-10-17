@@ -55,7 +55,7 @@ export default function Navbar() {
             {[
               { name: "HOME", path: "/" },
               { name: "ADMIN", path: "/admin/login", hideAuth: true },
-              { name: "RESIDENT", path: "/user/login", hideAuth: true },
+              // { name: "RESIDENT", path: "/user/login", hideAuth: true },
             ].map((link) => (
               (!user || !link.hideAuth) && (
                 <Link
@@ -81,7 +81,7 @@ export default function Navbar() {
           }`}>
             {!user ? (
               <Link
-                to="/user/login"
+                to="/admin/login"
                 className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 active:scale-95 shadow-lg ${
                   !isScrolled && isHomePage
                     ? "bg-white text-slate-900 hover:bg-indigo-50 shadow-white/10"
