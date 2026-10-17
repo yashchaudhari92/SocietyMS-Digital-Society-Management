@@ -90,7 +90,7 @@ export default function AdminRegister() {
               <span className="text-2xl">🛡️</span>
             </div>
             <h2 className="text-2xl font-black text-slate-900 tracking-tight">Admin Sign Up</h2>
-            <p className="text-slate-500 text-xs mt-1">Create your administrative credentials</p>
+            <p className="text-slate-500 text-xs mt-1">Create your administrative credentials and manage your society</p>
           </div>
 
           <form onSubmit={handleRegister} className="space-y-4">

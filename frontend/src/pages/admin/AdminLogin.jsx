@@ -132,7 +132,8 @@ export default function AdminLogin() {
 
           {/* Footer Link */}
           <p className="mt-8 text-center text-slate-500 text-sm">
-            Not an admin? <Link to="/user/login" className="text-indigo-600 font-bold hover:underline">Resident Login</Link>
+            {/* Not an admin? <Link to="/user/login" className="text-indigo-600 font-bold hover:underline">Resident Login</Link> */}
+            Not have an admin account? <Link to="/admin/register" className="text-indigo-600 font-bold hover:underline">Register</Link>
           </p>
         </div>
       </motion.div>
